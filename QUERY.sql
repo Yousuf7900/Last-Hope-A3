@@ -32,3 +32,6 @@ CREATE TABLE Bookings (
     payment_status VARCHAR(20) CHECK (payment_status IN ('Pending', 'Confirmed', 'Cancelled', 'Refunded') OR payment_status IS NULL),
     total_cost NUMERIC(10,2) CHECK (total_cost >= 0)
 );
+
+-- Query 1 --
+SELECT match_id, fixture, base_ticket_price FROM Matches WHERE tournament_category = 'Champions League' AND match_status = 'Available';
