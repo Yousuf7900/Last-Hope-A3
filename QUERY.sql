@@ -41,3 +41,9 @@ SELECT user_id, full_name, email FROM Users WHERE full_name ILIKE 'Tanvir%' OR f
 
 -- Query 3 --
 SELECT booking_id, user_id, match_id, COALESCE (payment_status, 'Action Required') AS systematic_status FROM Bookings WHERE payment_status IS NULL;
+
+-- Query 4 --
+SELECT b.booking_id, u.user_id, m.fixture, b.total_cost FROM Bookings b INNER JOIN Users u ON b.user_id = u.user_id INNER JOIN Matches m ON b.match_id = m.match_id;
+
+-- Query 5 --
+SELECT u.user_id, u.full_name, b.booking_id FROM Users u LEFT JOIN Bookings b ON u.user_id = b.user_id;
