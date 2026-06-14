@@ -1,9 +1,9 @@
-CREATE DATABASE football_ticket_booking;
+-- CREATE DATABASE football_ticket_booking;
 
 -- DROP TABLES IF THEY ALREADY EXIST TO PREVENT CONFLICTS
-DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS Bookings;
 DROP TABLE IF EXISTS Matches;
+DROP TABLE IF EXISTS Users;
 
 -- 1. CREATE USERS TABLE
 CREATE TABLE Users (
@@ -43,7 +43,13 @@ SELECT user_id, full_name, email FROM Users WHERE full_name ILIKE 'Tanvir%' OR f
 SELECT booking_id, user_id, match_id, COALESCE (payment_status, 'Action Required') AS systematic_status FROM Bookings WHERE payment_status IS NULL;
 
 -- Query 4 --
-SELECT b.booking_id, u.user_id, m.fixture, b.total_cost FROM Bookings b INNER JOIN Users u ON b.user_id = u.user_id INNER JOIN Matches m ON b.match_id = m.match_id;
+SELECT b.booking_id, u.full_name, m.fixture, b.total_cost FROM Bookings b INNER JOIN Users u ON b.user_id = u.user_id INNER JOIN Matches m ON b.match_id = m.match_id;
 
 -- Query 5 --
 SELECT u.user_id, u.full_name, b.booking_id FROM Users u LEFT JOIN Bookings b ON u.user_id = b.user_id;
+
+-- Query 6 --
+SELECT booking_id, match_id, total_cost FROM Bookings WHERE total_cost > (SELECT AVG(total_cost) FROM Bookings);
+
+-- Query 7 --
+SELECT match_id, fixture, base_ticket_price FROM Matches ORDER BY base_ticket_price DESC LIMIT 2 OFFSET 1;
